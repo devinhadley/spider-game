@@ -1,5 +1,6 @@
 package org.studs.spidergame;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -11,6 +12,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class GameController {
     @FXML
@@ -48,6 +53,8 @@ public class GameController {
 
     private Rectangle[][] gridBoxes = new Rectangle[5][5];
 
+    private ArrayList<Rectangle> pellets = new ArrayList<>();
+
     private final double GRID_BOX_RADIUS = 31.5;
 
 
@@ -56,11 +63,22 @@ public class GameController {
         final String path = "/home/devinhadley/dev/308/spider-game/game/LevelData.txt";
         Level.populateLevelsFromFile(path, levels);
         currentLevel = levels[0];
+        renderGrid();
+    }
 
+
+    private void clearPellets() {
+        ObservableList<Node> nodes = gridAnchor.getChildren();
+        for (Rectangle pellet : pellets){
+            nodes.remove(pellet);
+        }
+    }
+
+    private void renderGrid() {
+        clearPellets();
         populateGridBoxes();
         moveSpiderToStart();
         placePellets();
-
     }
 
     private void placePellets() {
@@ -78,7 +96,10 @@ public class GameController {
             diamond.setLayoutX(center[0] - diamond.getWidth() / 2);
             diamond.setLayoutY(center[1] - diamond.getHeight() / 2);
 
+            pellets.add(diamond);
             gridAnchor.getChildren().add(diamond);
+
+
         }
     }
 
@@ -158,6 +179,20 @@ public class GameController {
         }
 
         yPos += 100;
+
+    }
+
+    @FXML
+    protected void onChangeLevel(ActionEvent event) {
+        Pattern pattern = Pattern.compile("'(.*?)'");
+        Matcher matcher = pattern.matcher(event.getSource().toString());
+
+        while (matcher.find()) {
+            String level = matcher.group(1);
+            int levelNumber = Integer.parseInt(level);
+            currentLevel = levels[levelNumber - 1];
+            renderGrid();
+        }
 
     }
 
