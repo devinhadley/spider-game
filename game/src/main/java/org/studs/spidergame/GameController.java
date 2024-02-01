@@ -35,11 +35,11 @@ public class GameController {
         // Not sure where to position it yet
         stack.setLayoutX(xpos);
         stack.setLayoutY(100);
-        xpos += 100;
         myRoot.getChildren().add(stack);
     }
 
     @FXML protected void onStep(){
+        xpos += 100;
     }
     @FXML protected void onTurn(){
     }
