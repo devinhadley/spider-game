@@ -79,6 +79,4 @@ public class GameController {
     protected void onHelloButtonClick() {
         welcomeText.setText("Welcome to JavaFX Application!");
     }
-
-
 }
