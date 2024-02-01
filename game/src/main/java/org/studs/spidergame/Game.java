@@ -1,3 +1,8 @@
+/**
+ * The {@code Game} class represents the core functionality of the spider game, handling game initialization,
+ * level management, grid rendering, and game actions. It interacts with JavaFX components to display the game state
+ * in a graphical user interface.
+ */
 package org.studs.spidergame;
 
 import javafx.collections.ObservableList;
@@ -17,25 +22,64 @@ import java.util.Scanner;
 
 public class Game {
 
+    /**
+     * Path to the level data file.
+     */
     final String path = "/home/devinhadley/dev/308/spider-game/game/LevelData.txt";
+
+    /**
+     * Array holding all levels available in the game.
+     */
     private final Level[] levels = new Level[15];
+
+    /**
+     * The current level the player is on.
+     */
     private Level currentLevel;
+
+    /**
+     * Two-dimensional array representing the grid boxes on the game board.
+     */
     private final Rectangle[][] gridBoxes = new Rectangle[5][5];
+
+    /**
+     * List of rectangles representing pellets on the game board.
+     */
     private final ArrayList<Rectangle> pellets = new ArrayList<>();
 
+    /**
+     * The spider character, represented as a circle.
+     */
     @FXML
     private final Circle spider;
 
+    /**
+     * Radius of each grid box.
+     */
     private final double GRID_BOX_RADIUS = 31.5;
 
+    /**
+     * Vertical position offset for rendering purposes.
+     */
     private int yPos = 0;
 
-
+    /**
+     * AnchorPane representing the grid on which the game is played.
+     */
     private AnchorPane gridAnchor;
+
+    /**
+     * AnchorPane used for drawing additional elements like steps, turns, etc.
+     */
     private AnchorPane drawPanel;
 
-
-
+    /**
+     * Constructs a new Game instance, initializing the game with a spider, grid, and drawing panel.
+     *
+     * @param spider     the spider character
+     * @param gridAnchor the grid AnchorPane
+     * @param drawPanel  the drawing panel AnchorPane
+     */
     public Game(Circle spider, AnchorPane gridAnchor, AnchorPane drawPanel) {
         populateLevelsFromFile();
         currentLevel = levels[0];
@@ -45,6 +89,9 @@ public class Game {
         renderGrid();
     }
 
+    /**
+     * Clears pellets from the game board.
+     */
     private void clearPellets() {
         ObservableList<Node> nodes = gridAnchor.getChildren();
         for (Rectangle pellet : pellets) {
@@ -52,6 +99,9 @@ public class Game {
         }
     }
 
+    /**
+     * Renders the grid for the current level, placing the spider and pellets.
+     */
     private void renderGrid() {
         clearPellets();
         populateGridBoxes();
@@ -59,7 +109,9 @@ public class Game {
         placePellets();
     }
 
-
+    /**
+     * Places pellets on the grid based on the current level's pellet locations.
+     */
     private void placePellets() {
         for (Pellet pellet : currentLevel.pelletLocations) {
             Rectangle diamond = new Rectangle(15, 15);
@@ -76,11 +128,12 @@ public class Game {
 
             pellets.add(diamond);
             gridAnchor.getChildren().add(diamond);
-
-
         }
     }
 
+    /**
+     * Populates the gridBoxes array with Rectangle nodes from the gridAnchor's children.
+     */
     private void populateGridBoxes() {
         int row = 0, col = 0;
 
@@ -97,6 +150,12 @@ public class Game {
         }
     }
 
+    /**
+     * Creates a Rectangle with a text label and adds it to the drawPanel.
+     *
+     * @param type  the type of action (e.g., "Step", "Turn", "Paint")
+     * @param color the color of the Rectangle
+     */
     private void makeRectangle(String type, Color color) {
         Text text = new Text(type);
         Rectangle rec = new Rectangle(100, 100);
@@ -107,6 +166,12 @@ public class Game {
         drawPanel.getChildren().add(stack);
     }
 
+    /**
+     * Calculates the center coordinates of a given Rectangle.
+     *
+     * @param rect the Rectangle to calculate the center for
+     * @return an array of two doubles representing the center's x and y coordinates
+     */
     private double[] getRectCenter(Rectangle rect) {
         double[] list = new double[2];
         list[0] = rect.getLayoutX() + rect.getWidth() / 2;
@@ -114,6 +179,9 @@ public class Game {
         return list;
     }
 
+    /**
+     * Moves the spider to the starting location of the current level.
+     */
     private void moveSpiderToStart() {
         int startX = currentLevel.getSpawnLoc()[0];
         int startY = currentLevel.getSpawnLoc()[1];
@@ -126,15 +194,11 @@ public class Game {
         spider.setLayoutY(center[1]);
     }
 
-
+    /**
+     * Populates the levels array by reading level data from a file.
+     */
     private void populateLevelsFromFile() {
         try {
-
-            // This parser assumes that each line in the input file, corresponding to a single level, is formatted as such:
-            // "22 43r 12b 45g" Corresponds to a level with a spawn location at coordinate 2, 2,
-            // a red pellet at coordinate 4, 3, a blue pellet at 1, 2,
-            // and a green pellet at 4, 5. The line number is implicitly passed as the level number.
-
             File f = new File(path);
             Scanner in = new Scanner(f);
             int levelIndex = 0;
@@ -156,25 +220,39 @@ public class Game {
         }
     }
 
+    /**
+     * Handles the action to be taken on stepping.
+     */
     protected void onStep() {
         makeRectangle("Step", Color.GRAY);
         yPos += 100;
     }
 
+    /**
+     * Handles the action to be taken on turning.
+     */
     protected void onTurn() {
         makeRectangle("Turn", Color.GRAY);
         yPos += 100;
     }
 
+    /**
+     * Handles the action to be taken on painting, creating a rectangle of the specified color.
+     *
+     * @param color the color to paint
+     */
     protected void onPaint(Color color) {
         makeRectangle("Paint", color);
         yPos += 100;
     }
 
+    /**
+     * Changes the current level to the specified level number, re-rendering the grid accordingly.
+     *
+     * @param levelNumber the level number to switch to
+     */
     protected void changeLevel(int levelNumber) {
         currentLevel = levels[levelNumber - 1];
         renderGrid();
     }
-
-
 }

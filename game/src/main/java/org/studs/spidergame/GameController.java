@@ -3,7 +3,6 @@ package org.studs.spidergame;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -68,13 +67,14 @@ public class GameController {
         }
     }
 
-    protected int extractLevel(String eventString){
+    protected int extractLevel(String eventString) {
         Pattern pattern = Pattern.compile("'(.*?)'");
         Matcher matcher = pattern.matcher(eventString);
-        if(matcher.find()){
+        if (matcher.find()) {
             String level = matcher.group(1);
             return Integer.parseInt(level);
-        };
+        }
+        ;
         throw new RuntimeException("Couldn't extract level from button!");
     }
 
