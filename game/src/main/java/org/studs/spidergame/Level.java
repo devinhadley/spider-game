@@ -19,8 +19,8 @@ public class Level {
         initGrid();
         this.pelletLocations = new ArrayList<>();
         this.spawnLoc = new int[2];
-        this.spawnLoc[0] = spX - 1;
-        this.spawnLoc[1] = spY - 1;
+        this.spawnLoc[0] = spX;
+        this.spawnLoc[1] = spY;
         this.levelNumber = number;
     }
 

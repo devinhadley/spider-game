@@ -8,8 +8,8 @@ public class Pellet {
     public char color;
 
     public Pellet(int x, int y, char c) {
-        this.x = x - 1;
-        this.y = y - 1;
+        this.x = x;
+        this.y = y;
         this.color = c;
     }
 
