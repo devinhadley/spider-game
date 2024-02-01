@@ -1,9 +1,10 @@
-module org.studs.spidergame {
+module com.example.spiderworld2 {
     requires javafx.controls;
     requires javafx.fxml;
 
-    requires com.almasb.fxgl.all;
+    requires org.controlsfx.controls;
+    requires org.kordamp.bootstrapfx.core;
 
-    opens org.studs.spidergame to javafx.fxml;
-    exports org.studs.spidergame;
+    opens com.example.spiderworld2 to javafx.fxml;
+    exports com.example.spiderworld2;
 }
