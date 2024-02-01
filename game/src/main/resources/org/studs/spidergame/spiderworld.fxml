@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="853.0" prefWidth="1238.0" xmlns="http://javafx.com/javafx/20" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.studs.spidergame.GameController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="853.0" prefWidth="1238.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.studs.spidergame.GameController">
    <children>
       <AnchorPane id="grid" layoutX="22.0" layoutY="145.0" prefHeight="386.0" prefWidth="415.0">
          <children>
@@ -195,22 +195,22 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Button>
-      <Button layoutX="261.0" layoutY="58.0" mnemonicParsing="false" onAction="#onPaint" prefHeight="52.0" prefWidth="89.0" style="-fx-background-color: red; -fx-border-color: black; -fx-border-width: 2;" text="Red" textAlignment="CENTER" textFill="WHITE">
+      <Button fx:id="redButton" layoutX="261.0" layoutY="58.0" mnemonicParsing="false" onAction="#onPaint" prefHeight="52.0" prefWidth="89.0" style="-fx-background-color: red; -fx-border-color: black; -fx-border-width: 2;" text="Red" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Button>
-      <Button layoutX="375.0" layoutY="58.0" mnemonicParsing="false" onAction="#onPaint" prefHeight="52.0" prefWidth="89.0" style="-fx-background-color: blue; -fx-border-color: black; -fx-border-width: 2;" text="Blue" textAlignment="CENTER" textFill="WHITE">
+      <Button fx:id="blueButton" layoutX="375.0" layoutY="58.0" mnemonicParsing="false" onAction="#onPaint" prefHeight="52.0" prefWidth="89.0" style="-fx-background-color: blue; -fx-border-color: black; -fx-border-width: 2;" text="Blue" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Button>
-      <Button layoutX="489.0" layoutY="58.0" mnemonicParsing="false" onAction="#onPaint" prefHeight="52.0" prefWidth="89.0" style="-fx-background-color: green; -fx-border-color: black; -fx-border-width: 2;" text="Green" textAlignment="CENTER" textFill="WHITE">
+      <Button fx:id="greenButton" layoutX="489.0" layoutY="58.0" mnemonicParsing="false" onAction="#onPaint" prefHeight="52.0" prefWidth="89.0" style="-fx-background-color: green; -fx-border-color: black; -fx-border-width: 2;" text="Green" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Button>
-      <Button layoutX="602.0" layoutY="58.0" mnemonicParsing="false" onAction="#onPaint" prefHeight="52.0" prefWidth="89.0" style="-fx-background-color: black; -fx-border-color: black; -fx-border-width: 2;" text="Black" textAlignment="CENTER" textFill="WHITE">
+      <Button fx:id="blackButton" layoutX="602.0" layoutY="58.0" mnemonicParsing="false" onAction="#onPaint" prefHeight="52.0" prefWidth="89.0" style="-fx-background-color: black; -fx-border-color: black; -fx-border-width: 2;" text="Black" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
@@ -237,7 +237,7 @@
       </Button>
       <ScrollPane layoutX="447.0" layoutY="145.0" prefHeight="615.0" prefWidth="556.0">
          <content>
-            <AnchorPane prefHeight="704.0" prefWidth="797.0">
+            <AnchorPane fx:id="drawBox" prefHeight="704.0" prefWidth="797.0">
                <children>
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="GREY" height="58.0" layoutX="26.0" layoutY="527.0" stroke="GREY" strokeType="INSIDE" width="48.0" />
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="GREY" height="11.0" layoutX="20.0" layoutY="513.0" stroke="GREY" strokeType="INSIDE" width="61.0" />

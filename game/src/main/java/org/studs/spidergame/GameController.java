@@ -1,5 +1,6 @@
 package org.studs.spidergame;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
@@ -15,36 +16,69 @@ public class GameController {
     private Label welcomeText;
 
     @FXML
-    private AnchorPane myRoot;
+    private AnchorPane drawBox;
 
-    private int xpos = 100;
+    @FXML
+    private Button redButton;
+
+    @FXML
+    private Button blueButton;
+
+    @FXML
+    private Button greenButton;
+
+    @FXML
+    private Button blackButton;
+
+    private int yPos = 0;
 
 
-
-    @FXML private void createAndAddRectangles() {
+    @FXML
+    private void createAndAddRectangles() {
         /**myRoot is already instantiated. you can simply add nodes to it at runtime
          by using onAction="createAndAddRectangles" tag on a button in your .fxml file.**/
     }
 
-    private void makeRectangle(String type, Color color){
+    private void makeRectangle(String type, Color color) {
         Text text = new Text(type);
         Rectangle rec = new Rectangle(100, 100);
         rec.setFill(color);
         StackPane stack = new StackPane();
         stack.getChildren().addAll(rec, text);
-        // Not sure where to position it yet
-        stack.setLayoutX(xpos);
-        stack.setLayoutY(100);
-        myRoot.getChildren().add(stack);
+        stack.setLayoutY(yPos);
+        drawBox.getChildren().add(stack);
     }
 
-    @FXML protected void onStep(){
-        xpos += 100;
+    @FXML
+    protected void onStep() {
+        makeRectangle("Step", Color.GRAY);
+        yPos += 100;
     }
-    @FXML protected void onTurn(){
+
+    @FXML
+    protected void onTurn() {
+        makeRectangle("Turn", Color.GRAY);
+        yPos += 100;
     }
-    @FXML protected void onPaint(){
-        makeRectangle("Paint", Color.RED);
+
+    @FXML
+    protected void onPaint(ActionEvent event) {
+        Object source = event.getSource();
+
+        if (source == blackButton) {
+            makeRectangle("Paint", Color.BLACK);
+        } else if (source == redButton) {
+            makeRectangle("Paint", Color.RED);
+        } else if (source == blueButton) {
+            makeRectangle("Paint", Color.BLUE);
+        } else if (source == greenButton) {
+            makeRectangle("Paint", Color.GREEN);
+        } else {
+            throw new RuntimeException("onPaint called from non color button!");
+        }
+
+        yPos += 100;
+
     }
 
     @FXML
