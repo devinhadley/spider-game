@@ -13,8 +13,8 @@ public class Game extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Game.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 500, 500, Color.BLUE);
+        FXMLLoader fxmlLoader = new FXMLLoader(Game.class.getResource("spiderworld.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 1250, 800, Color.BLUE);
         stage.setScene(scene);
         stage.show();
     }
