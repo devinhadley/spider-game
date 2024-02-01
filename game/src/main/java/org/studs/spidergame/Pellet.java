@@ -1,11 +1,11 @@
-package com.example.spiderworld2;
+package org.studs.spidergame;
 
-public class PelletData {
+public class Pellet {
     public int x;
     public int y;
     public char color;
 
-    public PelletData(int x, int y, char c) {
+    public Pellet(int x, int y, char c) {
         this.x = x;
         this.y = y;
         this.color = c;
