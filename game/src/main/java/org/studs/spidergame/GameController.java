@@ -33,12 +33,6 @@ public class GameController {
     private int yPos = 0;
 
 
-    @FXML
-    private void createAndAddRectangles() {
-        /**myRoot is already instantiated. you can simply add nodes to it at runtime
-         by using onAction="createAndAddRectangles" tag on a button in your .fxml file.**/
-    }
-
     private void makeRectangle(String type, Color color) {
         Text text = new Text(type);
         Rectangle rec = new Rectangle(100, 100);
