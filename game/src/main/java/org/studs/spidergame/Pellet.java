@@ -1,14 +1,25 @@
 package org.studs.spidergame;
 
+import javafx.scene.paint.Color;
+
 public class Pellet {
     public int x;
     public int y;
     public char color;
 
     public Pellet(int x, int y, char c) {
-        this.x = x;
-        this.y = y;
+        this.x = x - 1;
+        this.y = y - 1;
         this.color = c;
+    }
+
+    public Color getColor() {
+        return switch (this.color) {
+            case 'r' -> Color.RED;
+            case 'g' -> Color.GREEN;
+            case 'b' -> Color.BLUE;
+            default -> null;
+        };
     }
 
     @Override
