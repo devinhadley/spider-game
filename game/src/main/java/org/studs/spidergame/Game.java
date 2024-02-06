@@ -23,7 +23,7 @@ public class Game {
     /**
      * Path to the level data file.
      */
-    final String path = "C:/Users/ethan/Box Sync/Cal Poly/2023-2024/Winter Quarter/CSC 308/Assignment 1/CodeCity/FileParser/CodeCityJParser/spider-game/game/LevelData.txt";
+    final String path = System.getProperty("user.dir") + File.separator + "LevelData.txt";
 
     /**
      * Array holding all levels available in the game.
