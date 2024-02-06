@@ -33,11 +33,14 @@ public class GameController {
     @FXML
     private Circle spider;
 
+    @FXML
+    private AnchorPane dragPanel;
+
     private Game game;
 
     @FXML
     private void initialize() {
-        this.game = new Game(spider, gridAnchor, drawBox);
+        this.game = new Game(spider, gridAnchor, drawBox, dragPanel);
     }
 
     @FXML
@@ -74,7 +77,7 @@ public class GameController {
             String level = matcher.group(1);
             return Integer.parseInt(level);
         }
-        ;
+
         throw new RuntimeException("Couldn't extract level from button!");
     }
 
