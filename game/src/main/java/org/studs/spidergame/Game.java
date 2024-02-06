@@ -182,7 +182,7 @@ public class Game {
             int levelIndex = 0;
             while (in.hasNextLine()) {
                 String data = in.nextLine();
-                String[] split = data.split("/s");
+                String[] split = data.split("\\s");
                 Level l1 = new Level(Character.getNumericValue(split[0].charAt(0)), Character.getNumericValue(split[0].charAt(1)), levelIndex + 1);
                 for (int i = 1; i < split.length; i++) {
                     int pX = Character.getNumericValue(split[i].charAt(0));
