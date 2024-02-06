@@ -9,11 +9,9 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -25,7 +23,7 @@ public class Game {
     /**
      * Path to the level data file.
      */
-    final String path = "/home/devinhadley/dev/308/spider-game/game/LevelData.txt";
+    final String path = System.getProperty("user.dir") + File.separator + "LevelData.txt";
 
     /**
      * Array holding all levels available in the game.
@@ -59,11 +57,6 @@ public class Game {
     private final double GRID_BOX_RADIUS = 31.5;
 
     /**
-     * Vertical position offset for rendering purposes.
-     */
-    private int yPos = 0;
-
-    /**
      * AnchorPane representing the grid on which the game is played.
      */
     private AnchorPane gridAnchor;
@@ -71,7 +64,8 @@ public class Game {
     /**
      * AnchorPane used for drawing additional elements like steps, turns, etc.
      */
-    private AnchorPane drawPanel;
+    //private AnchorPane drawPanel;
+    private DragDropUtil dragDropUtil;
 
     /**
      * Constructs a new Game instance, initializing the game with a spider, grid, and drawing panel.
@@ -80,12 +74,12 @@ public class Game {
      * @param gridAnchor the grid AnchorPane
      * @param drawPanel  the drawing panel AnchorPane
      */
-    public Game(Circle spider, AnchorPane gridAnchor, AnchorPane drawPanel) {
+    public Game(Circle spider, AnchorPane gridAnchor, AnchorPane drawPanel, AnchorPane dragPanel) {
         populateLevelsFromFile();
         currentLevel = levels[0];
         this.gridAnchor = gridAnchor;
         this.spider = spider;
-        this.drawPanel = drawPanel;
+        this.dragDropUtil = new DragDropUtil(drawPanel, dragPanel);
         renderGrid();
     }
 
@@ -151,22 +145,6 @@ public class Game {
     }
 
     /**
-     * Creates a Rectangle with a text label and adds it to the drawPanel.
-     *
-     * @param type  the type of action (e.g., "Step", "Turn", "Paint")
-     * @param color the color of the Rectangle
-     */
-    private void makeRectangle(String type, Color color) {
-        Text text = new Text(type);
-        Rectangle rec = new Rectangle(100, 100);
-        rec.setFill(color);
-        StackPane stack = new StackPane();
-        stack.getChildren().addAll(rec, text);
-        stack.setLayoutY(yPos);
-        drawPanel.getChildren().add(stack);
-    }
-
-    /**
      * Calculates the center coordinates of a given Rectangle.
      *
      * @param rect the Rectangle to calculate the center for
@@ -224,16 +202,16 @@ public class Game {
      * Handles the action to be taken on stepping.
      */
     protected void onStep() {
-        makeRectangle("Step", Color.GRAY);
-        yPos += 100;
+        dragDropUtil.addBlock(MoveType.STEP);
+        //TO-DO: execute game actions
     }
 
     /**
      * Handles the action to be taken on turning.
      */
     protected void onTurn() {
-        makeRectangle("Turn", Color.GRAY);
-        yPos += 100;
+        dragDropUtil.addBlock(MoveType.TURN);
+        //TO-DO: execute game actions
     }
 
     /**
@@ -242,8 +220,8 @@ public class Game {
      * @param color the color to paint
      */
     protected void onPaint(Color color) {
-        makeRectangle("Paint", color);
-        yPos += 100;
+        dragDropUtil.addBlock(DragDropUtil.colorMap.get(color));
+        //TO-DO: execute game actions
     }
 
     /**
