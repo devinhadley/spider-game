@@ -15,15 +15,19 @@ import javafx.scene.shape.Rectangle;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Scanner;
+import javafx.scene.control.Alert;
 
 public class Game {
 
     /**
      * Path to the level data file.
      */
-    final String path = System.getProperty("user.dir") + File.separator + "LevelData.txt";
+    final String path = System.getProperty("user.dir") + File.separator + "org/studs/spidergame/LevelData.txt";
 
     /**
      * Array holding all levels available in the game.
@@ -67,6 +71,8 @@ public class Game {
     //private AnchorPane drawPanel;
     private DragDropUtil dragDropUtil;
 
+    private File levelFile;
+
     /**
      * Constructs a new Game instance, initializing the game with a spider, grid, and drawing panel.
      *
@@ -75,13 +81,44 @@ public class Game {
      * @param drawPanel  the drawing panel AnchorPane
      */
     public Game(Circle spider, AnchorPane gridAnchor, AnchorPane drawPanel, AnchorPane dragPanel) {
-        populateLevelsFromFile();
         currentLevel = levels[0];
         this.gridAnchor = gridAnchor;
         this.spider = spider;
         this.dragDropUtil = new DragDropUtil(drawPanel, dragPanel);
+        setFile();
+        populateLevelsFromFile();
+        currentLevel = levels[0];
         renderGrid();
     }
+
+    private static void displayErrorAndExit(String msg) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setContentText(msg);
+        alert.showAndWait();
+        System.exit(1);
+    }
+
+    private void setFile() {
+        URL resourceUrl = Game.class.getResource("LevelData.txt");
+        if (resourceUrl == null) {
+            displayErrorAndExit("LevelData.txt not found!");
+            return;
+        }
+
+        File file = null;
+        try {
+            URI resourceUri = ((URL) resourceUrl).toURI();
+            System.out.println("Setting file!");
+            levelFile = new File(resourceUri);
+        } catch (URISyntaxException e) {
+            displayErrorAndExit("Error converting URL to URI!");
+            e.printStackTrace();
+        }
+
+    }
+
+
 
     /**
      * Clears pellets from the game board.
@@ -177,8 +214,7 @@ public class Game {
      */
     private void populateLevelsFromFile() {
         try {
-            File f = new File(path);
-            Scanner in = new Scanner(f);
+            Scanner in = new Scanner(levelFile);
             int levelIndex = 0;
             while (in.hasNextLine()) {
                 String data = in.nextLine();
