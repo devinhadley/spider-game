@@ -8,6 +8,7 @@ package org.studs.spidergame;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -20,14 +21,8 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Scanner;
-import javafx.scene.control.Alert;
 
 public class Game {
-
-    /**
-     * Path to the level data file.
-     */
-    final String path = System.getProperty("user.dir") + File.separator + "org/studs/spidergame/LevelData.txt";
 
     /**
      * Array holding all levels available in the game.
@@ -117,7 +112,6 @@ public class Game {
         }
 
     }
-
 
 
     /**
@@ -230,7 +224,7 @@ public class Game {
                 levels[levelIndex++] = l1;
             }
         } catch (FileNotFoundException e) {
-            System.out.println("Unable to find file. You may need to update the path in DummyWindow.java!\n" + path);
+            displayErrorAndExit("No levelData file!");
         }
     }
 
